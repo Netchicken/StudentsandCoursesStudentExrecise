@@ -1,0 +1,68 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@using StudentsandCoursesStudentExrecise.Operations;
+
+        <div class="card" style=" margin-top: 20px">
+        <div class="card-header">
+           
+            <p class="card-text">Add stuff here</p>
+        </div>
+        <div class="card-body">
+            
+            <form method="post">
+                <div class="form-group">
+                    <div class="row">
+
+                      
+                        <h3>@(Model.student.Course.CourseName == null ? "Select Student and Courses" : Model.student.Course.CourseName  )</h3>
+                        <select asp-for="StudentSelected" asp-items="Html.GetEnumSelectList<StudentsandCoursesStudentExrecise.Operations.StudentEnum>()">
+                            <option selected="selected" value=""> Select a course</option>
+                        </select>
+                        @*</div>*@
+
+                        <div class="row">
+                            <input type="submit" value="Submit" asp-action="Index" />
+                        </div>
+                    </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            
+
+            <div class="row">
+
+                @if (Model.hasData)
+                {
+                    <h5>@Model.student.FirstName  @Model.student.LastName  @Model.student.HasLaptop </h5>
+                  
+                    <h6>Course Tutor @Model.student.Course.Tutor</h6>
+
+
+                    <p class="h4">Student Transport</p>
+                    <ul class="list-group list-group-flush">
+                        @foreach (string item in Model.student.MainTransportType)
+                        {
+                            <li class="list-group-item">@item</li>
+                        }
+                    </ul>
+
+                    @foreach (var item in Model.student.MainTransportType)
+                    {
+                        <input type="radio" asp-for="TransportTypeUsed" value="@item" /> @item<br />
+                    }
+
+
+
+
+
+                }
+
+
+
+            </div>
+        </div>
+    </div>
